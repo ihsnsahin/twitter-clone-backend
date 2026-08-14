@@ -13,6 +13,5 @@ public record TweetDetailResponse(
         List<Long> likedUserIds,
         long retweetCount,
         List<Long> retweetUserIds
-
 ) {
 }

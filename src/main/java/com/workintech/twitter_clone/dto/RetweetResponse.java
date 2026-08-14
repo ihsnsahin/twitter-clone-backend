@@ -4,5 +4,4 @@ public record RetweetResponse(
         long id,
         long tweetId,
         long userId
-) {
-}
+) { }

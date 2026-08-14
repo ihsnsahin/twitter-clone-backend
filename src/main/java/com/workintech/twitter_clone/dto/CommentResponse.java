@@ -7,6 +7,7 @@ public record CommentResponse(
         String content,
         LocalDate commentTime,
         long tweetId,
-        long userId
+        long userId,
+        String userName
 ) {
 }

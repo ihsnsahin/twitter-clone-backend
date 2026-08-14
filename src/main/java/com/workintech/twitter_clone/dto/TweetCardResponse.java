@@ -3,15 +3,16 @@ package com.workintech.twitter_clone.dto;
 import java.time.LocalDate;
 import java.util.List;
 
-public record TweetResponse (
+public record TweetCardResponse(
         long id,
         String content,
         LocalDate tweetTime,
         long userId,
-        // TweetCard için güncelleme yaptım.
         String userName,
         long likeCount,
         long commentCount,
-        long retweetCount
+        long retweetCount,
+        boolean likedByCurrentUser,
+        Long currentUserRetweetId
 ) {
 }

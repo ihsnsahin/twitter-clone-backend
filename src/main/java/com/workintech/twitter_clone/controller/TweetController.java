@@ -1,8 +1,6 @@
 package com.workintech.twitter_clone.controller;
 
-import com.workintech.twitter_clone.dto.TweetDetailResponse;
-import com.workintech.twitter_clone.dto.TweetRequest;
-import com.workintech.twitter_clone.dto.TweetResponse;
+import com.workintech.twitter_clone.dto.*;
 import com.workintech.twitter_clone.entity.Tweet;
 import com.workintech.twitter_clone.entity.User;
 import com.workintech.twitter_clone.service.TweetService;
@@ -11,6 +9,8 @@ import com.workintech.twitter_clone.util.Converter;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,9 +24,13 @@ public class TweetController {
     private final TweetService tweetService;
     private final UserService userService;
     @GetMapping
-    List<TweetResponse> findAll() {
+    List<TweetCardResponse> findAll() {
         List<Tweet> tweetList = tweetService.findAll();
-        return Converter.tweetResponseConvert(tweetList);
+        //Tweet Card için ekleme yapıldı.
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = userService.findByEmail(authentication.getName());
+        //return Converter.tweetResponseConvert(tweetList);//currentUser'ı converter'a gönderiyorum.
+        return Converter.tweetCardResponseConvert(tweetList, currentUser);
     }
 
     @GetMapping("findByUserId/{id}")
@@ -38,11 +42,16 @@ public class TweetController {
         return Converter.tweetResponseConvert(tweetList);
     }
     @GetMapping("findById/{id}")
-    TweetDetailResponse findById(
+    TweetCardDetailResponse findById(
             @Positive(message = "Tweet id pozitif olmalıdır")
             @PathVariable long id) {
         Tweet tweet = tweetService.findById(id);
-        return Converter.tweetDetailResponse(tweet);
+        //Tweet Card için ekleme yapıldı.
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = userService.findByEmail(authentication.getName());
+        //Tweet Card için kaldırıldı.
+        //return Converter.tweetDetailResponse(tweet);
+        return Converter.tweetCardDetailResponse(tweet,currentUser);
     }
     @PostMapping
     TweetResponse save( @Valid @RequestBody TweetRequest tweetRequest) {
