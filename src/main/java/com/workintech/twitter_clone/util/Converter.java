@@ -53,8 +53,7 @@ public class Converter {
                     comment.getContent(),
                     comment.getCommentTime(),
                     comment.getTweet().getId(),
-                    comment.getUser().getId(),
-                    comment.getUser().getName()
+                    new UserResponse(comment.getUser().getId(), comment.getUser().getName())
             ));
         }
 
@@ -72,15 +71,30 @@ public class Converter {
     }
     public static CommentResponse commentResponseConvert(Comment comment) {
         return new CommentResponse(comment.getId(), comment.getContent(), comment.getCommentTime(), comment.getTweet().getId(),
-                comment.getUser().getId(), comment.getUser().getName());
+                new UserResponse(comment.getUser().getId(), comment.getUser().getName()));
     }
     public static LikeResponse likeResponseConvert(Like like) {
         return new LikeResponse(like.getId(),like.getTweet().getId(), like.getUser().getId());
     }
 
-    public static RetweetResponse retweetResponseConvert(Retweet retweet) {
-        return new RetweetResponse(retweet.getId(),retweet.getTweet().getId(), retweet.getUser().getId());
+    public static RetweetResponse retweetResponseConvert(Retweet retweet, User currentUser) {
+        return new RetweetResponse(
+                retweet.getId(),
+                new UserResponse(retweet.getUser().getId(), retweet.getUser().getName()),
+                tweetCardResponseConvert(retweet.getTweet(), currentUser)
+        );
     }
+
+    public static List<RetweetResponse> retweetResponseConvert(List<Retweet> retweetList, User currentUser) {
+        List<RetweetResponse> retweetResponseList = new ArrayList<>();
+        for(Retweet retweet: retweetList) {
+            retweetResponseList.add(
+                    Converter.retweetResponseConvert(retweet, currentUser)
+            );
+        }
+        return retweetResponseList;
+    }
+
     //Tweet Card ile ilgili hazırlamak zorunda kaldığım converterlar.
 
 
@@ -111,7 +125,6 @@ public class Converter {
                 ? 0
                 : tweet.getRetweets().size();
         //Tweet Card için ekliyoruz.
-
         Long currentUserRetweetId = null;
         if (tweet.getRetweets() != null) {
 
@@ -166,8 +179,7 @@ public class Converter {
                     comment.getContent(),
                     comment.getCommentTime(),
                     comment.getTweet().getId(),
-                    comment.getUser().getId(),
-                    comment.getUser().getName()
+                    new UserResponse(comment.getUser().getId(), comment.getUser().getName())
             ));
         }
         long likeCount = tweet.getLikes() == null

@@ -1,11 +1,10 @@
 package com.workintech.twitter_clone.controller;
 
-import com.workintech.twitter_clone.dto.LoginRequest;
-import com.workintech.twitter_clone.dto.LoginResponse;
-import com.workintech.twitter_clone.dto.RegisterRequest;
-import com.workintech.twitter_clone.dto.RegisterResponse;
+import com.workintech.twitter_clone.dto.*;
+import com.workintech.twitter_clone.entity.User;
 import com.workintech.twitter_clone.exceptions.TwitterException;
 import com.workintech.twitter_clone.service.AuthenticationService;
+import com.workintech.twitter_clone.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -26,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     //Register
     private AuthenticationService authenticationService;
+    private UserService userService;//Me endpoint için eklendi.
     private AuthenticationManager authenticationManager;//Login için eklendi.
     private SecurityContextRepository securityContextRepository;//Login için eklendi.
     @PostMapping("/register")
@@ -63,7 +63,8 @@ public class AuthController {
         }
     }
     @GetMapping("/me")
-    public String me(Authentication authentication) {
-        return authentication.getName();
+    public UserResponse me(Authentication authentication) {
+        User currentUser = userService.findByEmail(authentication.getName());
+        return new UserResponse(currentUser.getId(), currentUser.getName());
     }
 }

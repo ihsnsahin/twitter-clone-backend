@@ -34,12 +34,16 @@ public class TweetController {
     }
 
     @GetMapping("findByUserId/{id}")
-    List<TweetResponse> findByUserId(@Positive(message = "Kullanıcı id pozitif olmalıdır")
+    List<TweetCardResponse> findByUserId(@Positive(message = "Kullanıcı id pozitif olmalıdır")
                                      @PathVariable long id) {
 
         User user = userService.findById(id);
         List<Tweet> tweetList = user.getTweets();
-        return Converter.tweetResponseConvert(tweetList);
+        //Tweet Card için kaldırıldı.
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = userService.findByEmail(authentication.getName());
+        //return Converter.tweetResponseConvert(tweetList);
+        return Converter.tweetCardResponseConvert(tweetList, currentUser);
     }
     @GetMapping("findById/{id}")
     TweetCardDetailResponse findById(

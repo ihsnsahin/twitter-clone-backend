@@ -39,7 +39,6 @@ public class SecurityConfig {
 
                     auth.requestMatchers(HttpMethod.DELETE, "/tweet/**")
                             .hasAuthority("USER");
-
                     auth.anyRequest().authenticated();
                 })
                 //.formLogin(Customizer.withDefaults())// Kendi login endpointimiz, oluşturduğumuz için siliyoruz.
@@ -82,7 +81,7 @@ public class SecurityConfig {
 
         configuration.setAllowedHeaders(List.of("*"));
 
-        configuration.setAllowCredentials(true);//yeni ekledim.
+        configuration.setAllowCredentials(true);//yeni ekledim.//withCredentials: true yapmak için;
 
         UrlBasedCorsConfigurationSource source =
                 new UrlBasedCorsConfigurationSource();

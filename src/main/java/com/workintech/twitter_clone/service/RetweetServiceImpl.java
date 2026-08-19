@@ -14,6 +14,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class RetweetServiceImpl implements  RetweetService{
@@ -47,6 +49,12 @@ public class RetweetServiceImpl implements  RetweetService{
         retweet.setTweet(tweet);
         return retweetRepository.save(retweet);
     }
+
+    @Override
+    public List<Retweet> findAll() {
+        return retweetRepository.findAll();
+    }
+
     @Override
     public void delete(Retweet retweet) {
         Authentication authentication =
