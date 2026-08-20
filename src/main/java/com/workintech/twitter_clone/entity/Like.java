@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(
         name = "like",
-        /*schema = "twitter",*/
+        schema = "twitter",
         //user ve tweet birlikte aynı olmasına izin vermemek için böyle bir kod yazdım.
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = {"user_id", "tweet_id"})

@@ -9,7 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name="role"/*, schema = "twitter"*/)
+@Table(name="role", schema = "twitter")
 public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
