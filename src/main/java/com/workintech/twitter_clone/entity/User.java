@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name="user", schema = "twitter")
+@Table(name="user"/*, schema = "twitter"*/)
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +45,7 @@ public class User implements UserDetails {
     private List<Retweet> retweets;
 
     @ManyToMany (fetch = FetchType.EAGER)
-    @JoinTable(name="user_role", schema = "twitter",
+    @JoinTable(name="user_role", /*schema = "twitter",*/
     joinColumns = @JoinColumn(name="twitter_id"),
     inverseJoinColumns = @JoinColumn(name="role_id"))
     private List<Role> roles;

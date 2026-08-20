@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name="tweet", schema = "twitter")
+@Table(name="tweet"/*, schema = "twitter"*/)
 public class Tweet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
