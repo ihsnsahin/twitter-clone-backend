@@ -75,7 +75,7 @@ public class SecurityConfig {
                 List.of("http://localhost:5173",
                         "http://localhost:3000",
                         "http://localhost:3200",
-                        "https://*.vercel.app"
+                        "https://twitter-clone-chi-lime.vercel.app"
                 ));
 
         configuration.setAllowedMethods(
