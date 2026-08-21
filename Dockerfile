@@ -1,4 +1,4 @@
-Dockerfile
+
 # 1. AŞAMA: Projeyi Derleme (Build Stage)
 FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
