@@ -6,8 +6,6 @@ import com.workintech.twitter_clone.exceptions.TwitterException;
 import com.workintech.twitter_clone.repository.RoleRepository;
 import com.workintech.twitter_clone.repository.UserRepository;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
